@@ -11,8 +11,14 @@ import time
 import pwd
 import getpass
 
+# Set these variables before use
+#
+# remote user for reverse ssh connection
 REMOTE_USER = None
+
+#Reverse port for SSH connection
 PORT = 5001
+
 
 app = Flask(__name__)
 
