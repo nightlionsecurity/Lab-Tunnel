@@ -1,14 +1,40 @@
 #!/usr/bin/python
 
+## License   ##########################################################
+#
+# Lab Tunnel Provisioner v1.3
+# Copyright (c) 2017, NightLion Security 
+#
+#
+#
+# 
+#
+# This is free software, licensed under:
+#  The Artistic License 2.0
+#
+
+
 import urllib2
 import fcntl, socket, struct
 import os
 import json
 import time
+import ConfigParser
 
-__SERVER_IP__ = "192.168.10.1"
-__SERVER_PORT__= 5001
-__SECRET_KEY__ = '62cc35df-af28-48ea-a623-79910f6743f8'
+
+configParser = ConfigParser.RawConfigParser()   
+configFilePath = r'config.conf'
+configParser.read(configFilePath)
+
+
+__SERVER_IP__ = configParser.get('lab-config', 'ServerIP')
+__SERVER_PORT__= configParser.get('lab-config', 'ServerPort')
+__SECRET_KEY__ = configParser.get('lab-config', 'SecretKey')
+
+
+# __SERVER_IP__ = "192.168.10.1"
+# __SERVER_PORT__= 5001
+# __SECRET_KEY__ = '62cc35df-af28-48ea-a623-79910f6743f8'
 
 
 def get_ip_addr():
