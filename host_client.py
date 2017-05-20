@@ -6,12 +6,9 @@ import os
 import json
 import time
 
-
-# Configuration connection to your host server. 
 __SERVER_IP__ = "192.168.10.1"
 __SERVER_PORT__= 5001
 __SECRET_KEY__ = '62cc35df-af28-48ea-a623-79910f6743f8'
-
 
 
 def get_ip_addr():
