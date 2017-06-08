@@ -10,17 +10,36 @@ import time
 import pwd
 import getpass
 import sqlite3
+import sys
 
-REMOTE_USER = None
-PORT = 5001 
+
 DATABASE = 'vm_hosts.sqlite3'
-__SECRET_KEY__ = '62cc35df-af28-48ea-a623-79910f6743f8'
-
-
-HOST = "0.0.0.0"
-
-
 cur_dir=os.path.dirname(os.path.realpath(__file__))
+
+conf=ConfigParser.ConfigParser()
+conf.readfp(open( os.path.join(cur_dir, 'config.conf')))
+HOST=conf.get("lab-config", "ServerIP")
+PORT=int(conf.get("lab-config", "ServerPort"))
+__SECRET_KEY__=conf.get("lab-config", "SecretKey")
+REMOTE_USER = conf.get("lab-config", "RemoteUser")
+
+
+
+
+class Logger(object):
+    def __init__(self, filename="default.log"):
+        self.log = open(filename, "a")
+
+    def write(self, message):
+        self.log.write(message)
+        self.log.flush()
+
+sys.stdout = Logger(os.path.join(cur_dir, "server.out"))
+sys.stderr = Logger(os.path.join(cur_dir, "server.log"))
+
+
+
+
 dbfile=os.path.join(cur_dir, DATABASE)
 
 
@@ -109,7 +128,6 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     def get_hosts(self):
         
-        print ("hosts")
         pinfo=self.path.split('/')
         skey = ''
         
@@ -258,4 +276,6 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         pass
     httpd.server_close()
+    
     print time.asctime(), "Server Stops - %s:%s" % (HOST, PORT)
+    sys.exit(0)
