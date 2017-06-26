@@ -32,7 +32,8 @@ case "$1" in
         echo "Error: argument '$1' not supported" >&2
         exit 3
         ;;
-    stop|status)
+    stop)
+	kill -9 `pidof -x host_server.py`
         # No-op
         exit 0
         ;;

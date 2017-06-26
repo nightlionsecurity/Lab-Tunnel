@@ -86,8 +86,6 @@ elif lnx_type.lower() == 's':
     conf.write(open(os.path.join(target_dir,'config.conf'),'w'))
     print "Enabling SSH Servise at startup"
     os.system("systemctl enable ssh")
-    print "Starting SSH Server"
-    os.system("/etc/init.d/ssh restart")
     shutil.copy('host_server.py', target_dir)
     os.chmod(os.path.join(target_dir,'host_server.py'), 0755)
     shutil.copy("host-server.initd","/etc/init.d/host-server")
